@@ -1,0 +1,18 @@
+.toolbar-separator {
+    flex: 1 1 auto;
+}
+
+.toolbar-buttons {
+  width: 100%;
+  margin-left: 10px;
+}
+
+.mat-toolbar {
+  position: relative;
+  z-index: 2;
+}
+
+.mat-toolbar button {
+  margin: auto 10px;
+}
+

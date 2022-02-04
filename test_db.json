@@ -1,0 +1,67 @@
+{
+  "shop": [
+    { 
+      "id": "0",
+      "name": "2x2 Pasta Bar",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+      "tags": [ "pasta", "spicy", "italian", "test1", "test2", "test3" ],
+      "items": [
+        {
+          "id": "0",
+          "name": "Mexicana",
+          "description": "Very pasty",
+          "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+          "tags": [ "pasta", "spicy", "italian" ]
+        },
+        {
+          "id": "1",
+          "name": "Carbonara",
+          "description": "Very pasty",
+          "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+          "tags": [ "pasta", "vegan", "italian" ]
+        }
+      ]
+    },
+    { 
+      "id": "2",
+      "name": "3x3 BarPasta",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+      "tags": [ "pasta", "spicy", "italian", "test1", "test2", "test3" ],
+      "items": []
+    },
+    {
+      "id": "1",
+      "name": "Night&Day",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://nightandday.rs/views/theme/img/logo.png",
+      "tags": [ "caffe", "pizza", "italian" ],
+      "items": []
+    },
+    {
+      "id": "4",
+      "name": "Night&Day",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://nightandday.rs/views/theme/img/logo.png",
+      "tags": [ "caffe", "pizza", "italian" ],
+      "items": []
+    },
+    {
+      "id": "4",
+      "name": "Night&Day",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://nightandday.rs/views/theme/img/logo.png",
+      "tags": [ "caffe", "pizza", "italian" ],
+      "items": []
+    },
+    {
+      "id": "4",
+      "name": "Night&Day",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "image": "http://nightandday.rs/views/theme/img/logo.png",
+      "tags": [ "caffe", "pizza", "italian" ],
+      "items": []
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+    <div fxHide fxShow.lt-sm>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button *ngFor="let item of links" mat-menu-item [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
+            </button>
+        </mat-menu>
+    </div>
+    <mat-icon style="margin-right:5px">{{logo.icon}}</mat-icon>
+    {{logo.text}}
+    <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="space-between" fxShow fxHide.lt-sm>
+        <div class="toolbar-left-buttons">
+            <a *ngFor="let item of getLinksForPosition(Position.Left)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
+            </a>
+        </div>
+        <div class="toolbar-right-buttons">
+            <a *ngFor="let item of getLinksForPosition(Position.Right)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
+            </a>
+        </div>
+    </div>
+</mat-toolbar>

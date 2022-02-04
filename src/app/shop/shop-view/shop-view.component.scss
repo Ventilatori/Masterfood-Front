@@ -1,0 +1,123 @@
+.container {
+    height: 100%;
+}
+
+.jumbotron {
+    background: #3f51b5;
+    color: white;
+    padding: 5% 0;
+
+    .spacer {
+        width: 50px;
+    }
+
+    .image-container {
+        margin-bottom: 25px;
+        background: #fff;
+        border-radius: 25px;
+        height: 250px;
+        width: 250px;
+
+        img {
+            height: 250px;
+            width: 250px;
+            object-fit: contain;
+        }
+    }
+
+    .info {
+        margin: 0 1rem;
+
+        h1 {
+            font-size: calc(24px + 2.5vmin);
+        }
+    }
+}
+
+.food-area {
+    margin: 1rem 2rem;
+    height: 100%;
+
+    .food-list {
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        height: 100%;
+        width: 100%;
+        min-width: 0;
+        
+        .food {
+            height: 125px;
+
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+
+            .food-text {
+                width: 100%;
+                overflow: hidden;
+
+                h3 {
+                    margin-bottom: 0px;
+                }
+
+                p {
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                
+                mat-chip-list {
+                    width: 100%;
+                    height: 39px;
+                }
+
+                mat-chip-list ::ng-deep .mat-chip-list-wrapper {
+                    overflow: auto;
+                    width: 100%;
+                    flex-wrap: unset !important;
+                }
+            }
+
+            /*
+            &:hover {
+                background-color: #f5f5f5;
+            }
+
+            &:active {
+                background-color: #f0f0f0;
+            }
+            */
+        }
+    }
+
+    .order-info {
+        padding: 0.5rem;
+        margin-bottom: 25px;
+        border-radius: 25px;
+        min-width: 300px;
+
+        h2 {
+            text-align: center;
+        }
+
+        .empty h3 {
+            color: gray;
+        }
+
+        button {
+        }
+    }
+
+    .spacer {
+        width: 20px;
+    }
+}
+
+.food-area-gt-sm {
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
