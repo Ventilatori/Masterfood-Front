@@ -1,0 +1,51 @@
+<div class="order-info mat-elevation-z4" fxLayout="column">
+    <h2>Order info</h2>
+    <mat-form-field>
+        <mat-label>Enter your name</mat-label>
+        <input matInput [(ngModel)]="order.name" [formControl]="nameFormControl">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+            Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Enter your address</mat-label>
+        <input matInput [(ngModel)]="order.address" [formControl]="addressFormControl">
+        <mat-error *ngIf="addressFormControl.hasError('required')">
+            Address is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Enter your phone number</mat-label>
+        <input matInput [(ngModel)]="order.phone" [formControl]="phoneFormControl" type="tel">
+        <mat-error *ngIf="phoneFormControl.hasError('required')">
+            Phone number is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="phoneFormControl.hasError('pattern')">
+            Phone number is not valid
+        </mat-error>
+    </mat-form-field>
+    <div class="empty" *ngIf="order.items.length == 0" fxFlex="1 1" fxLayoutAlign="center center">
+        <h3>Empty</h3>
+    </div>
+    <div *ngFor="let item of order.items; let lastItem = last">
+        <div class="item" fxLayout="row" fxLayoutAlign="start baseline">
+            <span class="item-name" fxFlex="1 1">{{ item.name }} x{{ item.amount }}</span>
+            <span class="item-price">{{ item.price * item.amount }}rsd</span>
+            <button mat-icon-button color="accent" (click)="removeItem(item)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="addItem(item)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <mat-divider *ngIf="!lastItem"></mat-divider>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isOrderValid()">
+            Order
+            <span *ngIf="order.items.length != 0">
+                for {{getOrderTotal()}}rsd
+            </span>
+        </button>
+    </div>
+</div>

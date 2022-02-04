@@ -7,6 +7,8 @@ export interface Item {
   name: string
   description: string
   image: string
+  price: number
+  amount: number
   tags: string[]
 }
 
@@ -48,5 +50,9 @@ export class ShopService {
 
   getShop(id: string): Observable<Shop> {
     return this.http.get<Shop>('/api/shop/'+id)
+  }
+  
+  newOrder(id: string, order: Order) {
+    return this.http.post('/api/shop/' + id + '/order', order)
   }
 }

@@ -12,6 +12,7 @@ import { ShopExploreComponent } from './shop/shop-explore/shop-explore.component
 import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { ShopViewComponent } from './shop/shop-view/shop-view.component';
 import { SearchComponent } from './search/search.component';
+import { OrderComponent } from './shop/shop-view/components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SearchComponent } from './search/search.component';
     NavbarComponent,
     ShopExploreComponent,
     ShopViewComponent,
-    SearchComponent
+    SearchComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

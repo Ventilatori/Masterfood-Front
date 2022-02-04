@@ -13,8 +13,10 @@
 			</mat-chip-list>
 		</div>
 	</div>
-	<div class="food-area" fxLayout="row" fxLayoutAlign="space-around start" fxLayout.lt-md="column-reverse" fxLayoutAlign.lt-md="space-around center" ngClass.gt-sm="food-area-gt-sm">
-		<div class="food-list mat-elevation-z4" fxLayout="column">
+	<div class="item-area" fxLayout="row" fxLayoutAlign="space-around start"
+			 fxLayout.lt-md="column-reverse" fxLayoutAlign.lt-md="space-around center"
+			 ngClass.gt-sm="item-area-gt-sm">
+		<div class="item-list mat-elevation-z4" fxLayout="column">
 			<h2>Search</h2>
 			<app-search 
 				[tags]="tagsFilter"
@@ -23,52 +25,32 @@
 				(onTagsChanged)="updateFilter(nameFilter, $event)">
 			</app-search>
 			<h2>Available items</h2>
-			<div class="food" fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of items">
-				<div class="spacer"></div>
-				<img [src]="item.image" />
-				<div class="spacer"></div>
-				<div class="food-text" fxFlex="1 1" fxLayout="column" fxLayoutAlign="start start">
-					<h3>{{item.name}}</h3>
-					<p>{{item.description}}</p>
-					<mat-chip-list>
-						<mat-chip *ngFor="let tag of item.tags" (click)="addTag(tag)">{{tag}}</mat-chip>
-					</mat-chip-list>
+			<div *ngFor="let item of items; let lastItem = last">
+				<div class="item" fxLayout="row" fxLayoutAlign="start center" >
+					<div class="spacer"></div>
+					<img [src]="item.image" />
+					<div class="spacer"></div>
+					<div class="item-text" fxFlex="1 1" 
+						 fxLayout="column" fxLayoutAlign="space-around start">
+						<h3>{{item.name}}</h3>
+						<p>{{item.description}}</p>
+						<mat-chip-list>
+							<mat-chip *ngFor="let tag of item.tags" (click)="addTag(tag)">
+								{{tag}}
+							</mat-chip>
+						</mat-chip-list>
+					</div>
+					<div fxLayout="column" fxLayoutAlign="space-around center" style="height:100%">
+						<h3>{{item.price}}rsd</h3>
+						<button mat-icon-button color="primary" (click)="addItem(item)">
+							<mat-icon>add</mat-icon>
+						</button>
+					</div>
 				</div>
-				<button mat-mini-fab color="primary" (click)="addItem(item)">
-					<mat-icon>add</mat-icon>
-				</button>
+				<mat-divider *ngIf="!lastItem"></mat-divider>
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<div class="order-info mat-elevation-z4" fxLayout="column">
-			<h2>Order info</h2>
-			<mat-form-field>
-				<mat-label>Enter your name</mat-label>
-				<input matInput [(ngModel)]="order.name">
-			</mat-form-field>
-			<mat-form-field>
-				<mat-label>Enter your address</mat-label>
-				<input matInput [(ngModel)]="order.address">
-			</mat-form-field>
-			<mat-form-field>
-				<mat-label>Enter your phone number</mat-label>
-				<input matInput [(ngModel)]="order.phone" type="tel">
-			</mat-form-field>
-			<div class="empty" *ngIf="order.items.length == 0" fxFlex="1 1" fxLayoutAlign="center center">
-				<h3>Empty</h3>
-		  </div>
-			<div class="item" *ngFor="let i of orderItems" fxLayout="row" fxLayoutAlign="start center">
-				<span fxFlex="1 1">{{ i.item.name }} x{{ i.amount }}</span>
-				<button mat-icon-button color="accent" (click)="removeItem(i.item)">
-					<mat-icon>remove</mat-icon>
-				</button>
-				<button mat-icon-button color="primary" (click)="addItem(i.item)">
-					<mat-icon>add</mat-icon>
-				</button>
-			</div>
-			<div fxLayout="row" fxLayoutAlign="center center">
-				<button mat-raised-button color="primary">Order</button>
-			</div>
-		</div>
+		<app-order [(order)]="order" (submitOrder)="onSubmitOrder()"></app-order>
 	</div>
 </div>

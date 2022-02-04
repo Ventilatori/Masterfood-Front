@@ -12,6 +12,8 @@
           "name": "Mexicana",
           "description": "Very pasty",
           "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+          "price": 300.00,
+          "amount": 1,
           "tags": [ "pasta", "spicy", "italian" ]
         },
         {
@@ -19,6 +21,8 @@
           "name": "Carbonara",
           "description": "Very pasty",
           "image": "http://dvaputadva.com/wp-content/uploads/2016/06/pastabar-logo-800.png",
+          "price": 280.00,
+          "amount": 1,
           "tags": [ "pasta", "vegan", "italian" ]
         }
       ]

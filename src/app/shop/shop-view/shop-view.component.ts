@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
+import {NotificationService} from 'src/app/notification.service';
 import {Item, Order, Shop, ShopService} from '../shop.service';
 
 @Component({
@@ -19,11 +20,11 @@ export class ShopViewComponent implements OnInit {
     address: '',
     items: []
   }
-  orderItems: {item: Item, amount: number}[] = []
 
   constructor(
     private route: ActivatedRoute,
-    private shopService: ShopService
+    private shopService: ShopService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -34,9 +35,15 @@ export class ShopViewComponent implements OnInit {
     })
   }
 
+  // Search Related
   updateFilter(name: string, tags: string[]) {
     this.nameFilter = name.toLowerCase()
     this.tagsFilter = tags.map(tag => tag.toLowerCase())
+    this.search()
+  }
+
+  addTag(tag: string) {
+    this.tagsFilter.push(tag)
     this.search()
   }
 
@@ -47,30 +54,24 @@ export class ShopViewComponent implements OnInit {
     })
   }
 
-  addTag(tag: string) {
-    this.tagsFilter.push(tag)
-    this.search()
+  // Order Related
+  addItem(target: Item) {
+    const item = this.order.items.find(item => item.name === target.name)
+    if(item != undefined) {
+      item.amount += 1
+    }
+    else {
+      this.order.items.push({...target}) 
+    }
   }
 
-  addItem(item: Item) {
-    this.order.items.push(item)
-    this.updateOrderItems()
-  }
-
-  removeItem(targetItem: Item) {
-    const pos = this.order.items.findIndex(item => item.name == targetItem.name)
-    if(pos != -1)
-      this.order.items.splice(pos, 1)
-    this.updateOrderItems()
-  }
-
-  updateOrderItems() {
-    const count: {[key: string]: number} = {}
-    const val: {[key: string]: {amount: number, item: Item}} = {}
-    this.order.items.forEach(item => {
-      count[item.name] = (count[item.name]||0) + 1
-      val[item.name] = {amount: count[item.name], item: item}
-    });
-    this.orderItems = Object.values(val)
+  onSubmitOrder() {
+    this.shopService.newOrder(this.shop.id, this.order).subscribe({
+      next: _ => 
+        this.notificationService.notify('Order placed successfully!', 'success'),
+      error: err => {
+        this.notificationService.notify('There was a problem while placing your order: ' + err.message, 'danger')
+      }
+    })
   }
 }
