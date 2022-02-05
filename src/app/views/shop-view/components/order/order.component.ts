@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Item, Order} from 'src/app/shop/shop.service';
+import {Item, Order} from 'src/app/common/shop.service';
 
 @Component({
   selector: 'app-order',

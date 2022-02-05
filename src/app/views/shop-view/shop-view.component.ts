@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
-import {NotificationService} from 'src/app/notification.service';
-import {Item, Order, Shop, ShopService} from '../shop.service';
+import {NotificationService} from 'src/app/common/notification.service';
+import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
 
 @Component({
   selector: 'app-shop-view',

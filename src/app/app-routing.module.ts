@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {PopularShopResolver} from './shop/popular-shop.resolver';
-import {ShopExploreComponent} from './shop/shop-explore/shop-explore.component';
-import {ShopViewComponent} from './shop/shop-view/shop-view.component';
-import {ShopResolver} from './shop/shop.resolver';
+import {PopularShopResolver} from './common/popular-shop.resolver';
+import {ExploreViewComponent} from './views/explore-view/explore-view.component';
+import {ShopViewComponent} from './views/shop-view/shop-view.component';
+import {ShopResolver} from './common/shop.resolver';
 
 const routes: Routes = [
   { 
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   { 
     path: 'explore', 
-    component: ShopExploreComponent,
+    component: ExploreViewComponent,
     resolve: { popular: PopularShopResolver }
   },
   { 
