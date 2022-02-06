@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {map, Observable, of} from 'rxjs';
 
 export interface Item {
-  id: string
+  id?: string
   name: string
   description: string
   image: string

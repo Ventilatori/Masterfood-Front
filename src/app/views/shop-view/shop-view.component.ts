@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data} from '@angular/router';
 import {NotificationService} from 'src/app/common/notification.service';
 import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
+import {ShopEditDialog} from './components/shop-edit-dialog/shop-edit-dialog.component';
 
 @Component({
   selector: 'app-shop-view',
@@ -11,6 +13,8 @@ import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
 export class ShopViewComponent implements OnInit {
   shop!: Shop
   items!: Item[]
+  canEdit = true
+
   nameFilter: string = ''
   tagsFilter: string[] = []
   allTags = new Set<string>()
@@ -22,6 +26,7 @@ export class ShopViewComponent implements OnInit {
   }
 
   constructor(
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private shopService: ShopService,
     private notificationService: NotificationService
@@ -33,6 +38,31 @@ export class ShopViewComponent implements OnInit {
       this.shop.items.forEach(item => item.tags.forEach(tag => this.allTags.add(tag)))
       this.items = this.shop.items
     })
+  }
+
+  // Item CRUD
+  createItem() {
+    const editDialog = this.dialog.open(ShopEditDialog, { })
+
+    // editDialog.afterClosed().subscribe(res => {
+    // }) 
+  }
+
+  deleteItem(item: Item) {
+    const pos = this.shop.items.findIndex((i) => i.name == item.name)
+    console.log(pos)
+    this.shop.items.splice(pos, 1)
+    console.log(this.shop.items)
+    this.search()
+  }
+
+  editItem(item: Item) {
+    const editDialog = this.dialog.open(ShopEditDialog, {
+      data: item
+    })
+
+    // editDialog.afterClosed().subscribe(res => {
+    // }) 
   }
 
   // Search Related
@@ -55,7 +85,7 @@ export class ShopViewComponent implements OnInit {
   }
 
   // Order Related
-  addItem(target: Item) {
+  orderItem(target: Item) {
     const item = this.order.items.find(item => item.name === target.name)
     if(item != undefined) {
       item.amount += 1

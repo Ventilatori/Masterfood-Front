@@ -1,0 +1,48 @@
+<h1 mat-dialog-title *ngIf="isNewItem">Add New Item</h1>
+<h1 mat-dialog-title *ngIf="!isNewItem">Edit Item</h1>
+<div mat-dialog-content>
+  <div fxLayout="row" fxLayout.lt-sm="column-reverse" fxLayoutAlign="center start">
+    <div fxLayout="column" fxFlex="1 1" class="inputs">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="item.name" [formControl]="nameFormControl">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput [(ngModel)]="item.price" [formControl]="priceFormControl">
+        <mat-error *ngIf="priceFormControl.hasError('required')">
+          Price is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="priceFormControl.hasError('pattern')">
+          Price is not valid
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="item.description" [formControl]="descFormControl">
+        <mat-error *ngIf="descFormControl.hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <app-tag-edit [tags]="item.tags"></app-tag-edit>
+    </div>
+    <div class="h-spacer v-spacer"></div>
+    <div class="v-spacer"></div>
+    <div fxLayout="column" fxLayoutAlign="center center"> 
+      <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center">
+        <img [src]="item.image" *ngIf="item.image !== ''"/>
+        <div class="empty" *ngIf="item.image === ''">
+          No image
+        </div>
+      </div>
+      <div class="v-spacer"></div>
+      <button mat-raised-button color="primary">Change Picture</button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions fxLayout="column">
+  <button mat-raised-button color="primary" (click)="onSubmit()">Apply</button>
+</div>
