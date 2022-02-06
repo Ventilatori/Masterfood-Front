@@ -44,8 +44,19 @@ export class ShopViewComponent implements OnInit {
   createItem() {
     const editDialog = this.dialog.open(ShopEditDialog, { })
 
-    // editDialog.afterClosed().subscribe(res => {
-    // }) 
+    editDialog.afterClosed().subscribe(newItem => {
+      if(newItem) {
+        this.shopService.addItem(this.shop.id, newItem).subscribe({
+          next: _ => {
+            this.shop.items.push(newItem)
+            this.search()
+            this.notificationService.notify('Item successfully added!', 'success')
+          },
+          error: err => 
+            this.notificationService.notify('Error while editing item: ' + err, 'danger')
+        })
+      }
+    }) 
   }
 
   deleteItem(item: Item) {
@@ -61,8 +72,22 @@ export class ShopViewComponent implements OnInit {
       data: item
     })
 
-    // editDialog.afterClosed().subscribe(res => {
-    // }) 
+    editDialog.afterClosed().subscribe(newItem => {
+      if(newItem) {
+        this.shopService.editItem(this.shop.id, newItem).subscribe({
+          next: _ => {
+            const pos = this.shop.items.findIndex(i => i.name == item.name)
+            if(pos != -1) {
+              this.shop.items[pos] = newItem
+            }
+            this.search()
+            this.notificationService.notify('Item successfully edited!', 'success')
+          },
+          error: err => 
+            this.notificationService.notify('Error while editing item: ' + err, 'danger')
+        })
+      }
+    }) 
   }
 
   // Search Related

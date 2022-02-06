@@ -31,7 +31,7 @@
 			<div *ngFor="let item of items; let lastItem = last">
 				<div class="item" fxLayout="row" fxLayoutAlign="start center" >
 					<div class="spacer"></div>
-					<img [src]="item.image" />
+					<img [src]="item.image" *ngIf="item.image !== ''"/>
 					<div class="spacer"></div>
 					<div class="item-text" fxFlex="1 1" 
 						 fxLayout="column" fxLayoutAlign="space-around start">

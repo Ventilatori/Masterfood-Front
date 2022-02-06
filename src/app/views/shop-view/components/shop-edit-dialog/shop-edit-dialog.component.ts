@@ -17,7 +17,10 @@ export class ShopEditDialog implements OnInit {
     amount: 1,
     tags: [] as string[]
   }
+  
   isNewItem = true
+
+  imageFile: File | undefined = undefined
 
   nameFormControl = new FormControl('', [Validators.required]);
   descFormControl = new FormControl('', [Validators.required]);
@@ -39,7 +42,28 @@ export class ShopEditDialog implements OnInit {
 
   }
 
+  isItemValid() {
+    return (this.nameFormControl.valid &&
+            this.descFormControl.valid &&
+            this.priceFormControl.valid)
+  }
+
+  onFileUpload(eventTarget: EventTarget | null) {
+    const fileInput = eventTarget as HTMLInputElement
+    console.log([fileInput])
+    //this.item.image = eventTarget.files?.item(0)
+    if(fileInput.files && fileInput.files[0]) {
+      this.imageFile = fileInput.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(fileInput.files[0])
+      reader.addEventListener("load", _ => {
+        // For preview
+        this.item.image = reader.result as string
+      })
+    }
+  }
+
   onSubmit() {
-    alert(this.item.tags)
+    this.dialogRef.close(this.item)
   }
 }

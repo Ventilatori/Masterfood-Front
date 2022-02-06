@@ -65,4 +65,14 @@ export class ShopService {
     //TODO: Temporary
     return this.http.get<Shop[]>('/api/shop?name_like='+name+'&tags='+tags)
   }
+
+  addItem(shopID: string, item: Item) {
+    //TODO: Temporary
+    return of(true)
+  }
+
+  editItem(shopID: string, item: Item) {
+    //TODO: Temporary
+    return of(true)
+  }
 }

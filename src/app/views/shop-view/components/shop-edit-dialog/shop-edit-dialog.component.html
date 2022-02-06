@@ -1,7 +1,8 @@
 <h1 mat-dialog-title *ngIf="isNewItem">Add New Item</h1>
 <h1 mat-dialog-title *ngIf="!isNewItem">Edit Item</h1>
 <div mat-dialog-content>
-  <div fxLayout="row" fxLayout.lt-sm="column-reverse" fxLayoutAlign="center start">
+  <div fxLayout="row" fxLayoutAlign="center start"
+       fxLayout.lt-sm="column-reverse" fxLayoutAlign.lt-sm="center center">
     <div fxLayout="column" fxFlex="1 1" class="inputs">
       <mat-form-field>
         <mat-label>Name</mat-label>
@@ -33,16 +34,22 @@
     <div class="v-spacer"></div>
     <div fxLayout="column" fxLayoutAlign="center center"> 
       <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center">
+        <input type="file" #imageUploadRef id="imageUploadRef" 
+          (change)="onFileUpload($event.target)"/>
         <img [src]="item.image" *ngIf="item.image !== ''"/>
         <div class="empty" *ngIf="item.image === ''">
           No image
         </div>
       </div>
       <div class="v-spacer"></div>
-      <button mat-raised-button color="primary">Change Picture</button>
+      <button mat-raised-button color="primary" (click)="imageUploadRef.click()">
+        Change Picture
+      </button>
     </div>
   </div>
 </div>
 <div mat-dialog-actions fxLayout="column">
-  <button mat-raised-button color="primary" (click)="onSubmit()">Apply</button>
+  <button mat-raised-button color="primary" 
+    [disabled]="!isItemValid()"
+    (click)="onSubmit()">Apply</button>
 </div>
