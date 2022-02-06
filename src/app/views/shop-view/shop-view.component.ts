@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Data} from '@angular/router';
+import {ActivatedRoute, Data, Router} from '@angular/router';
 import {NotificationService} from 'src/app/common/notification.service';
 import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
 import {ItemEditDialog} from './components/item-edit-dialog/item-edit-dialog.component';
@@ -28,6 +28,7 @@ export class ShopViewComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
+    private router: Router,
     private shopService: ShopService,
     private notificationService: NotificationService
   ) { }
@@ -38,6 +39,25 @@ export class ShopViewComponent implements OnInit {
       this.shop.items.forEach(item => item.tags.forEach(tag => this.allTags.add(tag)))
       this.items = this.shop.items
     })
+  }
+
+  // Shop CRUD
+  editShop() {
+    
+  }
+
+  deleteShop() {
+    const confirmed = confirm('Do you really want to delete this shop?')
+    if(confirmed) {
+      this.shopService.deleteShop(this.shop.id).subscribe({
+        next: _ => {
+          this.notificationService.notify('Shop successfully deleted!', 'success')
+          this.router.navigate(['/explore'])
+        },
+        error: err =>
+          this.notificationService.notify('Error deleting shop: ' + err, 'danger')
+      })
+    }
   }
 
   // Item CRUD

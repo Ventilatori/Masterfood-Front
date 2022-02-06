@@ -40,7 +40,7 @@ export class SearchViewComponent implements OnInit {
   }
 
   search() {
-    this.shopService.search(this.nameFilter, this.tagsFilter).subscribe(res => {
+    this.shopService.searchShops(this.nameFilter, this.tagsFilter).subscribe(res => {
       this.shops = res
     })
   }
