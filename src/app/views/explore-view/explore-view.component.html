@@ -7,18 +7,9 @@
       <mat-tab label="Popular shops" class="tab">
         <div class="content" ngClass.gt-sm="content-gt-sm">
           <h1>Our reccomendation</h1>
-          <div class="card-list">
-            <mat-card class="card mat-elevation-z4"
-                      *ngFor="let shop of shops" [routerLink]="['/shop', shop.id]">
-              <mat-card-title>{{shop.name}}</mat-card-title>
-              <img mat-card-image [src]="shop.image" />
-              <mat-card-footer>
-                <mat-chip-list fxLayout="row" fxLayoutAlign="center">
-                  <mat-chip *ngFor="let tag of shop.tags">{{tag}}</mat-chip>
-                </mat-chip-list>
-              </mat-card-footer>
-            </mat-card>
-          </div>
+          <app-shop-list [shops]="shops"
+                         (tagClicked)="onTagClicked($event)">
+          </app-shop-list>
         </div>
       </mat-tab>
       <mat-tab label="Popular tags" class="tab">
@@ -26,7 +17,8 @@
           <h1>Popular types of shops</h1>
           <div class="card-list">
             <mat-card class="card mat-elevation-z4" 
-                      *ngFor="let tag of tags" [routerLink]="'/search?tag=' + tag"> 
+                      *ngFor="let tag of tags" 
+                      [routerLink]="['/search']" [queryParams]="{ tag: tag }"> 
               <mat-card-title fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon>sell</mat-icon>
                 <span fxFlex="1 1">{{tag}}</span>

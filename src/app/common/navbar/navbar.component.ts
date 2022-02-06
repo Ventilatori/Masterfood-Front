@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   allLinks: Link[] = [
     { name: "Explore", link: "/explore", icon: "explore", loggedIn: true, pos: Position.Left },
-    { name: "Search", click: () => this.onSearch(), icon: "search", pos: Position.Left },
+    { name: "Search", link: "/search", icon: "search", pos: Position.Left },
     // { name: "Login", click: () => this.onAuth(AuthType.Login), icon: "login", loggedIn: false, pos: Position.Right },
     // { name: "Register", click: () => this.onAuth(AuthType.Register), icon: "person_add", loggedIn: false, pos: Position.Right },
     // { name: "Profile", click: () => this.gotoProfile(), icon: "person", loggedIn: true, pos: Position.Right },

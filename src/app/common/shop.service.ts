@@ -60,4 +60,9 @@ export class ShopService {
   newOrder(id: string, order: Order) {
     return this.http.post('/api/shop/' + id + '/order', order)
   }
+
+  search(name: string, tags: string[]) {
+    //TODO: Temporary
+    return this.http.get<Shop[]>('/api/shop?name_like='+name+'&tags='+tags)
+  }
 }

@@ -1,0 +1,18 @@
+<div class="container" fxLayout="column">
+	<div class="jumbotron mat-elevation-z6">
+		<div class="search-area">
+			<h1>Search</h1>
+			<app-search [tags]="tagsFilter"
+									[allTags]="allTags"
+									(onNameChanged)="updateFilter($event, tagsFilter)"
+									(onTagsChanged)="updateFilter(nameFilter, $event)">
+			</app-search>
+		</div>
+	</div>
+	<div class="results" ngClass.gt-sm="content-gt-sm">
+		<h1>Results</h1>
+		<app-shop-list [shops]="shops"
+									 (tagClicked)="addTag($event)">
+		</app-shop-list>
+	</div>
+</div>

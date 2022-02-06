@@ -9,7 +9,10 @@
 			<h1>{{shop.name}}</h1>
 			<h3>{{shop.description}}</h3>
 			<mat-chip-list>
-				<mat-chip *ngFor="let tag of shop.tags">{{tag}}</mat-chip>
+				<mat-chip *ngFor="let tag of shop.tags"
+						  [routerLink]="['/search']" [queryParams]="{tag: tag}">
+					{{tag}}
+				</mat-chip>
 			</mat-chip-list>
 		</div>
 	</div>

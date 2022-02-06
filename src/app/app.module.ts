@@ -13,6 +13,8 @@ import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { ShopViewComponent } from './views/shop-view/shop-view.component';
 import { SearchComponent } from './common/search/search.component';
 import { OrderComponent } from './views/shop-view/components/order/order.component';
+import { SearchViewComponent } from './views/search-view/search-view.component';
+import { ShopListComponent } from './common/shop-list/shop-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { OrderComponent } from './views/shop-view/components/order/order.compone
     SearchComponent,
     ExploreViewComponent,
     ShopViewComponent,
-    OrderComponent
+    OrderComponent,
+    SearchViewComponent,
+    ShopListComponent
   ],
   imports: [
     BrowserModule,
