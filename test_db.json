@@ -67,5 +67,13 @@
       "tags": [ "caffe", "pizza", "italian" ],
       "items": []
     }
+  ],
+  "popularTags": [
+    "restaurant", "pasta", "italian", "spicy", "pizza", "caffee", 
+    "pharmacy", "burger", "market", "kiosk", "vegan", "meat"
+  ],
+  "extraPopularTagsNotUsed": [
+    "fruit", "vegetables", "premium", "cheap", "fast", "bbq",
+    "keto", "snacks", "candy", "drinks", "alcohol", "supplies"
   ]
 }

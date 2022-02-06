@@ -41,11 +41,16 @@ export class ShopService {
     return this.http.get<Shop[]>('/api/shop')
   }
 
-  getPopular(): Observable<Shop[]> {
+  getPopularShops(): Observable<Shop[]> {
     // TODO: Temporary
     return this.getAll().pipe(
       map(shops => shops.slice(0, 6))
     )
+  }
+
+  getPopularTags(): Observable<string[]> {
+    // TODO: Temporary
+    return this.http.get<string[]>('/api/popularTags')
   }
 
   getShop(id: string): Observable<Shop> {

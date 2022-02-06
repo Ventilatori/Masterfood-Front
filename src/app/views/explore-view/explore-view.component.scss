@@ -1,8 +1,12 @@
+.explore {
+    height: 100%;
+}
+
 .jumbotron {
     background: #3f51b5;
     color: white;
     text-align: center;
-    padding: 7.5% 0;
+    padding: 5% 0;
     
     h1 {
         font-size: calc(24px + 2.5vmin);
@@ -11,7 +15,16 @@
 
 .content {
     margin: 0 40px;
-    margin-top: 20px;
+    height: 100%;
+
+    h1 {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .tab {
+        height: 100%;
+    }
 }
 
 .content-gt-sm {
@@ -20,25 +33,25 @@
     margin-top: 20px;
 }
 
-/* Restaurant List */
-.shop-list {
+/* Card List */
+.card-list {
   --repeat: auto-fit;
 }
 
 @media (min-width: calc(282px * 3)) {
-  .shop-list {
+  .card-list {
     --repeat: 3;
   }
 }
 
-.shop-list {
+.card-list {
     display: grid;
     grid-template-columns: repeat(var(--repeat, auto-fit), 282px);
     grid-gap: 1rem;
     justify-content: space-around;
 }
 
-.shop {
+.card {
     width: 250px;
     text-align: center;
     margin-bottom: 15px;

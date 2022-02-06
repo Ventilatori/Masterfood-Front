@@ -14,6 +14,6 @@ export class PopularShopResolver implements Resolve<Shop[]> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Shop[]> {
-    return this.shopService.getPopular()
+    return this.shopService.getPopularShops()
   }
 }

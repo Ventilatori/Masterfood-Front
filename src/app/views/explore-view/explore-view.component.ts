@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
-import {Shop} from 'src/app/common/shop.service';
+import {Shop, ShopService} from 'src/app/common/shop.service';
+
+enum PageTab {
+  Shops = 0,
+  Tags = 1
+}
 
 @Component({
   selector: 'app-explore-view',
@@ -9,21 +14,14 @@ import {Shop} from 'src/app/common/shop.service';
 })
 export class ExploreViewComponent implements OnInit {
   shops: Shop[] = []
+  tags: string[] = []
 
   constructor(
-    private route: ActivatedRoute
+    private shopService: ShopService
   ) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: Data) => {
-      this.shops = data['popular']
-    })
-  }
-
-  getTagList(tags: string[]): string[] {
-    if(tags.length > 3) 
-      return [...tags.slice(0, 2), `+${tags.length-2}`]
-    else
-      return tags
+    this.shopService.getPopularShops().subscribe(res => this.shops = res)
+    this.shopService.getPopularTags().subscribe(res => this.tags = res)
   }
 }
