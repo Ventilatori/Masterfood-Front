@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data} from '@angular/router';
 import {NotificationService} from 'src/app/common/notification.service';
 import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
-import {ShopEditDialog} from './components/shop-edit-dialog/shop-edit-dialog.component';
+import {ItemEditDialog} from './components/item-edit-dialog/item-edit-dialog.component';
 
 @Component({
   selector: 'app-shop-view',
@@ -42,7 +42,7 @@ export class ShopViewComponent implements OnInit {
 
   // Item CRUD
   createItem() {
-    const editDialog = this.dialog.open(ShopEditDialog, { })
+    const editDialog = this.dialog.open(ItemEditDialog, { })
 
     editDialog.afterClosed().subscribe(newItem => {
       if(newItem) {
@@ -60,15 +60,20 @@ export class ShopViewComponent implements OnInit {
   }
 
   deleteItem(item: Item) {
-    const pos = this.shop.items.findIndex((i) => i.name == item.name)
-    console.log(pos)
-    this.shop.items.splice(pos, 1)
-    console.log(this.shop.items)
-    this.search()
+    this.shopService.deleteItem(this.shop.id, item).subscribe({
+      next: _ => {
+        const pos = this.shop.items.findIndex((i) => i.name == item.name)
+        this.shop.items.splice(pos, 1)
+        this.search()
+        this.notificationService.notify('Item deleted successfully', 'success')
+      },
+      error: err =>
+        this.notificationService.notify('Error deleting the item: ' + err, 'danger')
+    })
   }
 
   editItem(item: Item) {
-    const editDialog = this.dialog.open(ShopEditDialog, {
+    const editDialog = this.dialog.open(ItemEditDialog, {
       data: item
     })
 

@@ -4,11 +4,11 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Item} from 'src/app/common/shop.service';
 
 @Component({
-  selector: 'app-shop-edit-dialog',
-  templateUrl: './shop-edit-dialog.component.html',
-  styleUrls: ['./shop-edit-dialog.component.scss']
+  selector: 'app-item-edit-dialog',
+  templateUrl: './item-edit-dialog.component.html',
+  styleUrls: ['./item-edit-dialog.component.scss']
 })
-export class ShopEditDialog implements OnInit {
+export class ItemEditDialog implements OnInit {
   item: Item = {
     name: '',
     description: '',
@@ -28,7 +28,7 @@ export class ShopEditDialog implements OnInit {
                                           Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
 
   constructor(
-    public dialogRef: MatDialogRef<ShopEditDialog>,
+    public dialogRef: MatDialogRef<ItemEditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Item
   ) {
     if(data) {

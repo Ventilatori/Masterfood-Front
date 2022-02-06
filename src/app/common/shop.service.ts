@@ -75,4 +75,9 @@ export class ShopService {
     //TODO: Temporary
     return of(true)
   }
+
+  deleteItem(shopID: string, item: Item) {
+    //TODO: Temporary
+    return of(true)
+  }
 }
