@@ -34,13 +34,14 @@ export class SearchViewComponent implements OnInit {
     this.search()
   }
 
+  addTag(tag: string) {
+    this.tagsFilter.push(tag)
+    this.search()
+  }
+
   search() {
     this.shopService.search(this.nameFilter, this.tagsFilter).subscribe(res => {
       this.shops = res
     })
-  }
-
-  addTag(tag: string) {
-    this.tagsFilter.push(tag)
   }
 }
