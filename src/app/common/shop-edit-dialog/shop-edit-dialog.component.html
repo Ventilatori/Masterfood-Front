@@ -1,0 +1,66 @@
+<h1 mat-dialog-title *ngIf="isNewShop">Add New Shop</h1>
+<h1 mat-dialog-title *ngIf="!isNewShop">Edit Shop</h1>
+<div mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="center start"
+       fxLayout.lt-sm="column-reverse" fxLayoutAlign.lt-sm="center center">
+    <div fxLayout="column" fxFlex="1 1" class="inputs">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="shop.name" [formControl]="nameFormControl">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="shop.description" [formControl]="descFormControl">
+        <mat-error *ngIf="descFormControl.hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <app-tag-edit [tags]="shop.tags"></app-tag-edit>
+      <div fxLayout="column" class="shopowner-input" *ngIf="isNewShop">
+        <h3>Shop owner account</h3>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="account.name" [formControl]="usernameFormControl">
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+            Username is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput [formControl]="passFormControl" [(ngModel)]="account.pass"
+                 [type]="hide ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="passFormControl.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+    </div>
+    <div class="h-spacer v-spacer"></div>
+    <div class="v-spacer"></div>
+    <div fxLayout="column" fxLayoutAlign="center center"> 
+      <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center">
+        <input type="file" #imageUploadRef id="imageUploadRef" 
+          (change)="onFileUpload($event.target)"/>
+        <img [src]="shop.image" *ngIf="shop.image !== ''"/>
+        <div class="empty" *ngIf="shop.image === ''">
+          No image
+        </div>
+      </div>
+      <div class="v-spacer"></div>
+      <button mat-raised-button color="primary" (click)="imageUploadRef.click()">
+        Change Picture
+      </button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions fxLayout="column">
+  <button mat-raised-button color="primary" 
+    [disabled]="!isShopValid()"
+    (click)="onSubmit()">Apply</button>
+</div>

@@ -59,7 +59,7 @@ export class ShopService {
   }
 
   // Shop CRUD
-  createShop(shop: Shop) {
+  createShop(account: {name: string, pass: string}, shop: Shop) {
     //TODO: Temporary
     return of(true)
   }

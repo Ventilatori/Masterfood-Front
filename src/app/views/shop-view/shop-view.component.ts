@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {NotificationService} from 'src/app/common/notification.service';
+import {ShopEditDialog} from 'src/app/common/shop-edit-dialog/shop-edit-dialog.component';
 import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
 import {ItemEditDialog} from './components/item-edit-dialog/item-edit-dialog.component';
 
@@ -43,7 +44,18 @@ export class ShopViewComponent implements OnInit {
 
   // Shop CRUD
   editShop() {
-    
+    this.dialog.open(ShopEditDialog, {
+      data: this.shop
+    }).afterClosed().subscribe(newShop => {
+      this.shopService.updateShop(newShop).subscribe({
+        next: res => {
+          this.shop = newShop
+          this.notificationService.notify('Shop edited successfully!', 'success')
+        },
+        error: err =>
+          this.notificationService.notify('Error editing shop: ' + err, 'danger')
+      })
+    })
   }
 
   deleteShop() {

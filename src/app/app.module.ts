@@ -17,6 +17,7 @@ import { SearchViewComponent } from './views/search-view/search-view.component';
 import { ShopListComponent } from './common/shop-list/shop-list.component';
 import { ItemEditDialog } from './views/shop-view/components/item-edit-dialog/item-edit-dialog.component';
 import { TagEditComponent } from './common/tag-edit/tag-edit.component';
+import { ShopEditDialog } from './common/shop-edit-dialog/shop-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TagEditComponent } from './common/tag-edit/tag-edit.component';
     SearchViewComponent,
     ShopListComponent,
     ItemEditDialog,
-    TagEditComponent
+    TagEditComponent,
+    ShopEditDialog
   ],
   imports: [
     BrowserModule,
