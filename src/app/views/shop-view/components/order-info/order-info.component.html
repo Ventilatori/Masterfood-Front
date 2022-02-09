@@ -37,10 +37,10 @@
                 </ul>
             </div>
             <div class="spacer"></div>
-            <button mat-icon-button color="accent" (click)="toggleOrderType()">
-                <mat-icon>close</mat-icon>
+            <button mat-icon-button color="warn" (click)="declineOrder(order)">
+                <mat-icon>clear</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="toggleOrderType()">
+            <button mat-icon-button color="primary" (click)="finishOrder(order)">
                 <mat-icon>done</mat-icon>
             </button>
         </div>

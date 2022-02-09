@@ -110,4 +110,12 @@ export class ShopService {
     // TODO: Temporary
     return of([])
   }
+
+  finishOrder(shopID: string, order: Order) {
+    return of(true)
+  }
+
+  declineOrder(shopID: string, order: Order) {
+    return of(true)
+  }
 }

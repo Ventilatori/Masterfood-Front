@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {interval, mergeMap, Subscription} from 'rxjs';
 import {NotificationService} from 'src/app/common/notification.service';
-import {OrderType, ShopService} from 'src/app/common/shop.service';
+import {Order, OrderType, ShopService} from 'src/app/common/shop.service';
 
 @Component({
   selector: 'app-order-info',
@@ -14,22 +14,24 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
 
   @Input() shopID = ''
 
-  orders = [
+  orders: Order[] = [
     {
+      id: '0',
       name: 'Janko',
       address: 'test',
       phone: '061231233',
       items: [
-        {name: 'Jabuka', amount: 3, price: 80}
+        {name: 'Jabuka', amount: 3, price: 80, description: '', image: '', tags: []}
       ] 
     },
     {
+      id: '1',
       name: 'Danko',
       address: 'test',
       phone: '061231233',
       items: [
-        {name: 'Jabuka', amount: 3, price: 80},
-        {name: 'Kruska', amount: 3, price: 80}
+        {name: 'Jabuka', amount: 3, price: 80, description: '', image: '', tags: []},
+        {name: 'Kruska', amount: 3, price: 80, description: '', image: '', tags: []}
       ] 
     }
   ]
@@ -58,6 +60,28 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
       next: res => {}, //this.orders = res,
       error: err =>
         this.notificationService.notify('Error updating order list: ' + err, 'danger')
+    })
+  }
+
+  finishOrder(order: Order) {
+    this.shopService.finishOrder(this.shopID, order).subscribe({
+      next: _ => {
+        this.orders = this.orders.filter(o => o.id !== order.id)
+        this.notificationService.notify('Order finished successfully!', 'success')
+      },
+      error: err =>
+        this.notificationService.notify('Error finishing order: ' + err, 'danger')
+    })
+  }
+
+  declineOrder(order: Order) {
+    this.shopService.declineOrder(this.shopID, order).subscribe({
+      next: _ => {
+        this.orders = this.orders.filter(o => o.id !== order.id)
+        this.notificationService.notify('Order aborted successfully!', 'success')
+      },
+      error: err =>
+        this.notificationService.notify('Error aborting order: ' + err, 'danger')
     })
   }
 
