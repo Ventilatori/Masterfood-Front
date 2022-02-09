@@ -81,7 +81,7 @@
 		<!-- For users -->
 		<app-order  *ngIf="!canEdit" [(order)]="order" (submitOrder)="onSubmitOrder()"></app-order>
 		<!-- For shop owners -->
-		<app-order-info *ngIf="canEdit" 
+		<app-order-info *ngIf="canEdit" [shopID]="shop.id"
 						class="order-info" ngClass.lt-md="order-info-lt-sm">
 		</app-order-info>
 	</div>

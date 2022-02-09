@@ -31,6 +31,11 @@ export interface Order {
   items: Item[]
 }
 
+export enum OrderType {
+  Active,
+  Done,
+}
+
 @Injectable({providedIn: 'root'})
 export class ShopService {
   constructor(
@@ -101,4 +106,8 @@ export class ShopService {
     return this.http.get<string[]>('/api/popularTags')
   }
 
+  getOrders(shopID: string, type: OrderType) {
+    // TODO: Temporary
+    return of([])
+  }
 }
