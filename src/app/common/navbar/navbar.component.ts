@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {AuthDialog} from '../auth-dialog/auth-dialog.component';
+import {AuthService, AuthUser} from '../auth.service';
 import {NotificationService} from '../notification.service';
 import {ShopEditDialog} from '../shop-edit-dialog/shop-edit-dialog.component';
 import {ShopService} from '../shop.service';
@@ -48,7 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   subUser!: Subscription
   auth = AuthLevel.Admin
   loggedIn = true
-  // user: AuthUser | null = null
+  user: AuthUser | null = null
 
   logo = {
     text: 'Shop4Me',
@@ -59,33 +61,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { name: "Explore", link: "/explore", icon: "explore", pos: Position.Left },
     { name: "Search", link: "/search", icon: "search", pos: Position.Left },
     { name: "New Shop", click: () => this.onNewShop(), icon: "person_add", pos: Position.Right, auth: AuthLevel.Admin },
+    { name: "My Shop", click: () => this.onMyShop(), icon: "person", pos: Position.Right, auth: AuthLevel.ShopOwner },
     { name: "Personnel", click: () => this.onAuth(AuthType.Login), icon: "login", loggedIn: false, pos: Position.Right },
     { name: "Log out", click: () => this.onLogOut(), icon: "logout", loggedIn: true, pos: Position.Right },
-    // { name: "Register", click: () => this.onAuth(AuthType.Register), icon: "person_add", loggedIn: false, pos: Position.Right },
-    // { name: "Profile", click: () => this.gotoProfile(), icon: "person", loggedIn: true, pos: Position.Right },
   ]
   links: Link[] = []
 
   constructor(
     public dialog: MatDialog,
-    // private authService: AuthService,
+    private authService: AuthService,
     private shopService: ShopService,
     private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
-    // this.subUser = this.authService.user.subscribe(user => {
-    //   this.loggedIn = !!user
-    //   this.user = user
-    //   this.links = this.allLinks.filter(l => l.loggedIn === undefined || l.loggedIn === this.loggedIn)
-    // })
-    // TODO: Integrate with AuthService
-    this.links = this.allLinks.filter(l => l.auth === undefined || this.auth >= l.auth)
-                              .filter(l => l.loggedIn === undefined || l.loggedIn === this.loggedIn)
+    this.subUser = this.authService.user.subscribe(user => {
+      // TODO: Get auth level
+      this.loggedIn = !!user
+      this.user = user
+      this.links = 
+        this.allLinks.filter(l => l.auth === undefined || this.auth === l.auth)
+                     .filter(l => l.loggedIn === undefined || l.loggedIn === this.loggedIn)
+    })
   }
 
   ngOnDestroy() {
-    // this.subUser.unsubscribe()
+    this.subUser.unsubscribe()
   }
 
   getLinksForPosition(pos: Position) {
@@ -94,14 +95,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   // TODO: Copy over from prev project
   onAuth(type: AuthType): void {
-  // this.dialog.open(AuthDialogComponent, {
-  //   width: '250px',
-  //   data: type,
-  // });
+    this.dialog.open(AuthDialog, {
+      width: '300px',
+      data: type,
+    });
   }
 
   onLogOut() {
-
+    this.authService.logout()
   }
 
   onNewShop() {
@@ -112,13 +113,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.notificationService.notify('Shop created successfully!', 'success')
         },
         error: err =>
-          this.notificationService.notify('Shop creatin failed: ' + err, 'danger')
+          this.notificationService.notify('Shop creation failed: ' + err, 'danger')
       })
     })
   }
 
-  gotoProfile(): void {
-    // if(this.user)
-    //   this.router.navigate(['/user', this.user.name])
+  onMyShop() {
   }
 }
