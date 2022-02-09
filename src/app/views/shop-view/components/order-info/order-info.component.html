@@ -1,0 +1,49 @@
+<div class="order-info mat-elevation-z4" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start baseline" *ngIf="showOrders == OrderType.Active">
+        <h2 fxFlex="1 1">Active Orders</h2>
+        <button mat-icon-button color="primary" (click)="toggleOrderType()">
+            <mat-icon>history</mat-icon>
+        </button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start baseline" *ngIf="showOrders == OrderType.Done">
+        <h2 fxFlex="1 1">Order History</h2>
+        <button mat-icon-button color="primary" (click)="toggleOrderType()">
+            <mat-icon>fiber_new</mat-icon>
+        </button>
+    </div>
+    <div class="empty" *ngIf="orders.length == 0" fxFlex="1 1" fxLayoutAlign="center center">
+        <h3>Empty</h3>
+    </div>
+    <div *ngFor="let order of orders; let lastItem = last">
+        <div class="order" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>
+                {{showOrders == OrderType.Active ? 'fiber_new' : 'check_circle_outline'}}
+            </mat-icon>
+            <div fxFlex="1 1">
+                <h3>{{order.name}}</h3>
+                <div>
+                    <span class="field">Contact phone:</span>
+                    {{order.phone}}
+                </div>
+                <div>
+                    <span class="field">Delivery address:</span>
+                    {{order.address}}
+                </div>
+                <div class="field">Items: </div>
+                <ul>
+                    <li class="item" *ngFor="let item of order.items">
+                        {{ item.name }} x{{ item.amount }}
+                    </li>
+                </ul>
+            </div>
+            <div class="spacer"></div>
+            <button mat-icon-button color="accent" (click)="toggleOrderType()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="toggleOrderType()">
+                <mat-icon>done</mat-icon>
+            </button>
+        </div>
+        <mat-divider *ngIf="!lastItem"></mat-divider>
+    </div>
+</div>

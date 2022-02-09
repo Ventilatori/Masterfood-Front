@@ -78,6 +78,11 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<app-order [(order)]="order" (submitOrder)="onSubmitOrder()"></app-order>
+		<!-- For users -->
+		<app-order  *ngIf="!canEdit" [(order)]="order" (submitOrder)="onSubmitOrder()"></app-order>
+		<!-- For shop owners -->
+		<app-order-info *ngIf="canEdit" 
+						class="order-info" ngClass.lt-md="order-info-lt-sm">
+		</app-order-info>
 	</div>
 </div>

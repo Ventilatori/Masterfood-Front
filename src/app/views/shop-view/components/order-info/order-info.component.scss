@@ -1,0 +1,42 @@
+.order-info {
+    padding: 0.5rem 1rem;
+    margin-bottom: 25px;
+    border-radius: 25px;
+
+    h2 {
+        text-align: center;
+    }
+
+    .empty h3 {
+        color: gray;
+    }
+
+    button {
+        margin-top: 0.5rem;
+    }
+}
+
+.order {
+    padding: 0.5rem 1rem;
+
+    h3 {
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .field {
+        font-weight: 500;
+    }
+
+    ul {
+        margin: 0;
+    }
+
+    .spacer {
+        width: 30px;
+    }
+
+    mat-icon {
+        margin-right: 1rem;
+    }
+}
