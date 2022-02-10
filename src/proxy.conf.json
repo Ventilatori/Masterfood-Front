@@ -5,5 +5,12 @@
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
+    },
+    "/realapi/*": {
+        "target": "https://localhost:5001",
+        "pathRewrite": { "^/realapi": "" },
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
     }
 }

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './common/navbar/navbar.component';
 import { ExploreViewComponent } from './views/explore-view/explore-view.component';
@@ -20,6 +20,7 @@ import { TagEditComponent } from './common/tag-edit/tag-edit.component';
 import { ShopEditDialog } from './common/shop-edit-dialog/shop-edit-dialog.component';
 import { OrderInfoComponent } from './views/shop-view/components/order-info/order-info.component';
 import { AuthDialog } from './common/auth-dialog/auth-dialog.component';
+import {AuthInterceptor} from './common/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,13 @@ import { AuthDialog } from './common/auth-dialog/auth-dialog.component';
     FlexModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

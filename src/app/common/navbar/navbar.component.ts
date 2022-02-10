@@ -93,7 +93,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onNewShop() {
     this.dialog.open(ShopEditDialog, {}).afterClosed().subscribe(res => {
-      this.shopService.createShop(res.account, res.shop).subscribe({
+      this.shopService.createShop(res.account, res.shop, res.image).subscribe({
         next: _ => {
           //TODO: Redirect
           this.notificationService.notify('Shop created successfully!', 'success')

@@ -2,9 +2,10 @@
   <mat-card class="card mat-elevation-z4"
             *ngFor="let shop of shops" [routerLink]="['/shop', shop.id]">
     <mat-card-title>{{shop.name}}</mat-card-title>
-    <img mat-card-image [src]="shop.image" />
+    <img mat-card-image [src]="shop.picture" />
     <mat-card-footer>
-      <mat-chip-list fxLayout="row" fxLayoutAlign="center">
+      <mat-chip-list fxLayout="row" fxLayoutAlign="center" 
+                     *ngIf="shop.tags.length != 0">
         <mat-chip *ngFor="let tag of shop.tags"
           (click)="onTagClicked(tag);$event.stopPropagation()">
           {{tag}}

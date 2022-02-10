@@ -68,9 +68,9 @@ export class ShopViewComponent implements OnInit, OnDestroy {
     this.dialog.open(ShopEditDialog, {
       data: this.shop
     }).afterClosed().subscribe(newShop => {
-      this.shopService.updateShop(newShop).subscribe({
+      this.shopService.updateShop(newShop.shop, newShop.image).subscribe({
         next: _ => {
-          this.shop = newShop
+          this.shop = newShop.shop
           this.notificationService.notify('Shop edited successfully!', 'success')
         },
         error: err =>
@@ -99,9 +99,9 @@ export class ShopViewComponent implements OnInit, OnDestroy {
 
     editDialog.afterClosed().subscribe(newItem => {
       if(newItem) {
-        this.shopService.addItem(this.shop.id, newItem).subscribe({
+        this.shopService.addItem(this.shop.id, newItem.item, newItem.image).subscribe({
           next: _ => {
-            this.shop.items.push(newItem)
+            this.shop.items.push(newItem.item)
             this.search()
             this.notificationService.notify('Item successfully added!', 'success')
           },
@@ -132,11 +132,11 @@ export class ShopViewComponent implements OnInit, OnDestroy {
 
     editDialog.afterClosed().subscribe(newItem => {
       if(newItem) {
-        this.shopService.editItem(this.shop.id, newItem).subscribe({
+        this.shopService.editItem(this.shop.id, newItem.item, newItem.image).subscribe({
           next: _ => {
             const pos = this.shop.items.findIndex(i => i.name == item.name)
             if(pos != -1) {
-              this.shop.items[pos] = newItem
+              this.shop.items[pos] = newItem.item
             }
             this.search()
             this.notificationService.notify('Item successfully edited!', 'success')

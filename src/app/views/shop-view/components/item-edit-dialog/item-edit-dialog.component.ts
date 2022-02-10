@@ -12,7 +12,7 @@ export class ItemEditDialog implements OnInit {
   item: Item = {
     name: '',
     description: '',
-    image: '',
+    picture: '',
     price: 0,
     amount: 1,
     tags: [] as string[]
@@ -51,19 +51,19 @@ export class ItemEditDialog implements OnInit {
   onFileUpload(eventTarget: EventTarget | null) {
     const fileInput = eventTarget as HTMLInputElement
     console.log([fileInput])
-    //this.item.image = eventTarget.files?.item(0)
+    //this.item.picture = eventTarget.files?.item(0)
     if(fileInput.files && fileInput.files[0]) {
       this.imageFile = fileInput.files[0]
       const reader = new FileReader()
       reader.readAsDataURL(fileInput.files[0])
       reader.addEventListener("load", _ => {
         // For preview
-        this.item.image = reader.result as string
+        this.item.picture = reader.result as string
       })
     }
   }
 
   onSubmit() {
-    this.dialogRef.close(this.item)
+    this.dialogRef.close({item: this.item, image: this.imageFile})
   }
 }

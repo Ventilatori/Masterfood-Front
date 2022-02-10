@@ -1,6 +1,6 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, exhaustMap, map, Observable, of, tap} from 'rxjs';
+import {BehaviorSubject, catchError, exhaustMap, map, Observable, of, tap} from 'rxjs';
 
 export interface AuthUser {
   id: string
@@ -21,6 +21,10 @@ interface Message {
   message: string
 };
 
+function translateError(err: any): Observable<any> {
+  throw err.error.message
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<AuthUser | null>(null)
@@ -39,30 +43,30 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<AuthUser> {
-    const formData = new FormData()
-    formData.append("userName", username)
-    formData.append("password", password)
-
     // TODO: Temporary
-    if(username == 'admin') {
+    if(username == 'fakeadmin') {
       this.user.next(this.adminUser)
       return of(this.adminUser)
     }
-    else if(username == 'shop') {
+    else if(username == 'fakeshop') {
       this.user.next(this.ownerUser)
       return of(this.ownerUser)
     }
 
-    return this.http.post<AuthUser>('/api/Auth/LogIn', formData).pipe(
+    return this.http.put<AuthUser>('/realapi/Auth/LogIn', {
+      userName: username,
+      password: password
+    }).pipe(
       tap(user => {
         this.user.next(user)
         localStorage.setItem("auth", JSON.stringify(user))
-      })
+      }),
+      catchError(translateError)
     )
   }
 
   logout() {
-    this.http.post('/api/Auth/LogOut', {}).subscribe(_ => {})
+    this.http.put('/realapi/Auth/LogOut', {}).subscribe(_ => {})
     localStorage.removeItem("auth")
     this.user.next(null)
   }

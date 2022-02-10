@@ -1,12 +1,14 @@
 <div class="container" fxLayout="column">
 	<div class="jumbotron mat-elevation-z6" 
-		 fxLayout="row" fxLayoutAlign="start center" fxLayout.lt-sm="column">
+		 fxLayout="row" fxLayoutAlign="start center" 
+		 fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center center">
 		<div class="spacer"></div>
 		<div class="image-container">
-			<img [src]="shop.image" />
+			<img [src]="shop.picture" />
 		</div>
 		<div class="spacer"></div>
-		<div class="info" fxLayout="column" fxLayoutAlign="start start">
+		<div class="info" fxLayout="column" fxLayoutAlign="start start"
+						  fxLayoutAlign.lt-sm="center center">
 			<h1>{{shop.name}}</h1>
 			<h3>{{shop.description}}</h3>
 			<mat-chip-list>
@@ -40,7 +42,7 @@
 			<div *ngFor="let item of items; let lastItem = last">
 				<div class="item" fxLayout="row" fxLayoutAlign="start center" >
 					<div class="spacer"></div>
-					<img [src]="item.image" *ngIf="item.image !== ''"/>
+					<img [src]="item.picture" *ngIf="item.picture !== ''"/>
 					<div class="spacer"></div>
 					<div class="item-text" fxFlex="1 1" 
 						 fxLayout="column" fxLayoutAlign="space-around start">

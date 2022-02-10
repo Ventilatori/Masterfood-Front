@@ -21,7 +21,7 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
       address: 'test',
       phone: '061231233',
       items: [
-        {name: 'Jabuka', amount: 3, price: 80, description: '', image: '', tags: []}
+        {name: 'Jabuka', amount: 3, price: 80, description: '', picture: '', tags: []}
       ] 
     },
     {
@@ -30,8 +30,8 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
       address: 'test',
       phone: '061231233',
       items: [
-        {name: 'Jabuka', amount: 3, price: 80, description: '', image: '', tags: []},
-        {name: 'Kruska', amount: 3, price: 80, description: '', image: '', tags: []}
+        {name: 'Jabuka', amount: 3, price: 80, description: '', picture: '', tags: []},
+        {name: 'Kruska', amount: 3, price: 80, description: '', picture: '', tags: []}
       ] 
     }
   ]
@@ -44,7 +44,6 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.shopID)
     this.subUpdate = interval(this.reloadTime).subscribe(_ => this.updateList())
     this.updateList()
   }

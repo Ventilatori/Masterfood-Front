@@ -36,8 +36,8 @@
       <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center">
         <input type="file" #imageUploadRef id="imageUploadRef" 
           (change)="onFileUpload($event.target)"/>
-        <img [src]="item.image" *ngIf="item.image !== ''"/>
-        <div class="empty" *ngIf="item.image === ''">
+        <img [src]="item.picture" *ngIf="item.picture !== ''"/>
+        <div class="empty" *ngIf="item.picture === ''">
           No image
         </div>
       </div>

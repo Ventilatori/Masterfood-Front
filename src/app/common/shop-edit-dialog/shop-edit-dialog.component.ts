@@ -13,7 +13,7 @@ export class ShopEditDialog implements OnInit {
     id: '',
     name: '',
     description: '',
-    image: '',
+    picture: '',
     items: [],
     tags: []
   }
@@ -63,16 +63,19 @@ export class ShopEditDialog implements OnInit {
       reader.readAsDataURL(fileInput.files[0])
       reader.addEventListener("load", _ => {
         // For preview
-        this.shop.image = reader.result as string
+        this.shop.picture = reader.result as string
       })
     }
   }
 
   onSubmit() {
     if(this.isNewShop) {
-      this.dialogRef.close({shop: this.shop})
+      this.dialogRef.close({shop: this.shop, 
+                            account: this.account, 
+                            image: this.imageFile})
     } else {
-      this.dialogRef.close(this.shop)
+      this.dialogRef.close({shop: this.shop, 
+                            image: this.imageFile})
     }
   }
 }
