@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AuthLevel, AuthService, AuthUser} from 'src/app/common/auth.service';
 import {NotificationService} from 'src/app/common/notification.service';
 import {ShopEditDialog} from 'src/app/common/shop-edit-dialog/shop-edit-dialog.component';
 import {Item, Order, Shop, ShopService} from 'src/app/common/shop.service';
@@ -11,10 +13,11 @@ import {ItemEditDialog} from './components/item-edit-dialog/item-edit-dialog.com
   templateUrl: './shop-view.component.html',
   styleUrls: ['./shop-view.component.scss']
 })
-export class ShopViewComponent implements OnInit {
+export class ShopViewComponent implements OnInit, OnDestroy {
   shop!: Shop
   items!: Item[]
-  canEdit = true
+  user: AuthUser | null = null
+  canEdit = false
 
   nameFilter: string = ''
   tagsFilter: string[] = []
@@ -26,11 +29,14 @@ export class ShopViewComponent implements OnInit {
     items: []
   }
 
+  subUser!: Subscription
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private shopService: ShopService,
+    private authService: AuthService,
     private notificationService: NotificationService
   ) { }
 
@@ -39,7 +45,22 @@ export class ShopViewComponent implements OnInit {
       this.shop = data['shop']
       this.shop.items.forEach(item => item.tags.forEach(tag => this.allTags.add(tag)))
       this.items = this.shop.items
+      this.checkEdit()
     })
+    this.subUser = this.authService.user.subscribe(user => {
+      this.user = user
+      this.checkEdit()
+    })
+  }
+
+  ngOnDestroy(): void {
+    if(this.subUser)
+      this.subUser.unsubscribe()
+  }
+
+  checkEdit() {
+      this.canEdit = !!this.user && (this.user.level === AuthLevel.Admin || 
+                                     this.user.shopID === this.shop.id)
   }
 
   // Shop CRUD
@@ -48,7 +69,7 @@ export class ShopViewComponent implements OnInit {
       data: this.shop
     }).afterClosed().subscribe(newShop => {
       this.shopService.updateShop(newShop).subscribe({
-        next: res => {
+        next: _ => {
           this.shop = newShop
           this.notificationService.notify('Shop edited successfully!', 'success')
         },

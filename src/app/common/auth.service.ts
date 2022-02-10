@@ -6,7 +6,15 @@ export interface AuthUser {
   id: string
   userName: string
   token: string
+  level: AuthLevel
+  shopID?: string
 };
+
+export enum AuthLevel {
+  ShopOwner,
+  Admin,
+  Guest
+}
 
 // Separate into shared folder
 interface Message {
@@ -16,6 +24,9 @@ interface Message {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<AuthUser | null>(null)
+
+  adminUser = { id: '0', userName: 'Admin', token: 'a', level: AuthLevel.Admin }
+  ownerUser = { id: '0', userName: 'Shop', token: 'b', level: AuthLevel.ShopOwner, shopID: '0'}
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +42,17 @@ export class AuthService {
     const formData = new FormData()
     formData.append("userName", username)
     formData.append("password", password)
+
+    // TODO: Temporary
+    if(username == 'admin') {
+      this.user.next(this.adminUser)
+      return of(this.adminUser)
+    }
+    else if(username == 'shop') {
+      this.user.next(this.ownerUser)
+      return of(this.ownerUser)
+    }
+
     return this.http.post<AuthUser>('/api/Auth/LogIn', formData).pipe(
       tap(user => {
         this.user.next(user)
