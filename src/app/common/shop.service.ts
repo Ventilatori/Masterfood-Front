@@ -83,29 +83,29 @@ export class ShopService {
   }
 
   getPopularShops(): Observable<Shop[]> {
-    // TODO: Temporary
-    return this.getAllShops().pipe(
-      map(shops => shops.slice(0, 6))
+    return this.http.get<Shop[]>('/realapi/Shop/Popular').pipe(
+      map(shops => shops.map(transformShop)),
+      catchError(translateError)
     )
   }
 
   getShop(id: string): Observable<Shop> {
-    return this.http.get<Shop>('/realapi/shop/'+id).pipe(
+    return this.http.get<Shop>('/realapi/Shop/'+id).pipe(
       map(transformShop),
       catchError(translateError)
     )
   }
 
   searchShops(name: string, tags: string[]) {
-    //TODO: Temporary
-    return this.http.get<Shop[]>('/api/shop?name_like='+name+'&tags='+tags).pipe(
-      map(shops => shops.map(transformShop))
+    tags = tags.map(tag => `"${tag}"`)
+    return this.http.post<Shop[]>('/realapi/Shop/Search', {name: name, tags: tags}).pipe(
+      map(shops => shops.map(transformShop)),
+      catchError(translateError)
     )
   }
 
   // Shop CRUD
   createShop(account: {name: string, pass: string}, shop: Shop, picture: File | undefined) {
-    //TODO: return shop id
     const formData = new FormData()
     formData.append("userName", account.name)
     formData.append("password", account.pass)
@@ -116,7 +116,8 @@ export class ShopService {
     if(picture)
       formData.append("picture", picture)
 
-    return this.http.post('/realapi/Shop', formData).pipe(catchError(translateError))
+    return this.http.post<{shopID: string}>('/realapi/Shop', formData)
+                    .pipe(catchError(translateError))
   }
 
   updateShop(shop: Shop, picture: File | undefined) {
@@ -166,12 +167,6 @@ export class ShopService {
     return this.http.delete(`/realapi/Shop/${shopID}/Item/${item.id}`)
   }
 
-  // Misc
-  getPopularTags(): Observable<string[]> {
-    // TODO: Temporary
-    return this.http.get<string[]>('/api/popularTags')
-  }
-
   // Order
   newOrder(shopID: string, order: Order) {
     return this.http.post(`/realapi/Shop/${shopID}/order`, order)
@@ -189,5 +184,19 @@ export class ShopService {
 
   declineOrder(shopID: string, order: Order) {
     return this.http.delete(`/realapi/Shop/${shopID}/Order/${order.id}/Abort`, {})
+  }
+
+  // Misc
+  getPopularTags(): Observable<string[]> {
+    return this.http.get<{name: string}[]>('/realapi/Shop/PopularTags').pipe(
+      map(tags => tags.map(tag => tag.name)),
+      catchError(translateError)
+    )
+  }
+
+  getAllTags(): Observable<string[]> {
+    return this.http.get<string[]>('/realapi/Shop/Tags').pipe(
+      catchError(translateError)
+    )
   }
 }

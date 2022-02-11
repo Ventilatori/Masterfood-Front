@@ -12,5 +12,12 @@
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
+    },
+    "/ipapi/*": {
+        "target": "http://ip-api.com",
+        "pathRewrite": { "^/ipapi": "" },
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
     }
 }

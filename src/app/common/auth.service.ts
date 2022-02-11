@@ -16,6 +16,11 @@ export enum AuthLevel {
   Guest
 }
 
+export interface Pos {
+  lon: number,
+  lat: number
+};
+
 // Separate into shared folder
 interface Message {
   message: string
@@ -71,4 +76,7 @@ export class AuthService {
     this.user.next(null)
   }
 
+  getLocation() {
+    this.http.get<Pos>('/ipapi/json')
+  }
 }

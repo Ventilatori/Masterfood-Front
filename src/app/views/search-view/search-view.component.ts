@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {NotificationService} from 'src/app/common/notification.service';
 import {Shop, ShopService} from 'src/app/common/shop.service';
 
 @Component({
@@ -16,15 +17,20 @@ export class SearchViewComponent implements OnInit {
 
   constructor(
     private shopService: ShopService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      console.log(params)
       if(params['tag'])
         this.tagsFilter = params['tag'].split(',')
       this.search()
+    })
+    this.shopService.getAllTags().subscribe({
+      next: res => { this.allTags = new Set(res); console.log(res)},
+      error: err =>
+        this.notificationService.notify('Error fetching tags: ' + err, 'danger')
     })
   }
 
