@@ -73,7 +73,7 @@
 				</div>
 				<mat-divider *ngIf="!(lastItem && !canEdit)"></mat-divider>
 			</div>
-			<div class="new-item" fxLayout="column" fxLayoutAlign="center center">
+			<div class="new-item" fxLayout="column" fxLayoutAlign="center center" *ngIf="canEdit">
 				<button mat-mini-fab color="primary" (click)="createItem()">
 					<mat-icon>add</mat-icon>
 				</button>

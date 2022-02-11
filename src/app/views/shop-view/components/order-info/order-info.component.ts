@@ -14,27 +14,7 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
 
   @Input() shopID = ''
 
-  orders: Order[] = [
-    {
-      id: '0',
-      name: 'Janko',
-      address: 'test',
-      phone: '061231233',
-      items: [
-        {name: 'Jabuka', amount: 3, price: 80, description: '', picture: '', tags: []}
-      ] 
-    },
-    {
-      id: '1',
-      name: 'Danko',
-      address: 'test',
-      phone: '061231233',
-      items: [
-        {name: 'Jabuka', amount: 3, price: 80, description: '', picture: '', tags: []},
-        {name: 'Kruska', amount: 3, price: 80, description: '', picture: '', tags: []}
-      ] 
-    }
-  ]
+  orders: Order[] = []
   showOrders = OrderType.Active
   subUpdate!: Subscription
 
@@ -56,7 +36,7 @@ export class OrderInfoComponent implements OnInit, OnDestroy {
   updateList() {
     // TODO: Uncomment this when API is done.
     this.shopService.getOrders(this.shopID, this.showOrders).subscribe({
-      next: res => {}, //this.orders = res,
+      next: res => this.orders = res,
       error: err =>
         this.notificationService.notify('Error updating order list: ' + err, 'danger')
     })

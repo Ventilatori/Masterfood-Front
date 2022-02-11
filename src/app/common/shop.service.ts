@@ -32,6 +32,12 @@ export interface Order {
   items: Item[]
 }
 
+export interface OrderList {
+  id?: string
+  active: Order[]
+  history: Order[]
+}
+
 export enum OrderType {
   Active,
   Done,
@@ -59,6 +65,10 @@ function transformShop(shop: Shop) {
 
 @Injectable({providedIn: 'root'})
 export class ShopService {
+  // TODO: Change to api after integration
+  public defaultItemImage = '/realapi/Images/Item/default.png'
+  public defaultShopImage = '/realapi/Images/Shop/default.png'
+
   constructor(
     private http: HttpClient,
     private authService: AuthService
@@ -149,12 +159,11 @@ export class ShopService {
       formData.append("picture", picture)
     formData.append("price", item.price.toString())
 
-    return this.http.put('/realapi/Shop/' + shopID + '/Item', formData)
+    return this.http.put(`/realapi/Shop/${shopID}/Item/${item.id}`, formData)
   }
 
   deleteItem(shopID: string, item: Item) {
-    //TODO: Untested
-    return this.http.delete('/api/Shop/' + shopID + '/Item' + item.id)
+    return this.http.delete(`/realapi/Shop/${shopID}/Item/${item.id}`)
   }
 
   // Misc
@@ -164,20 +173,21 @@ export class ShopService {
   }
 
   // Order
-  newOrder(id: string, order: Order) {
-    return this.http.post('/api/shop/' + id + '/order', order)
+  newOrder(shopID: string, order: Order) {
+    return this.http.post(`/realapi/Shop/${shopID}/order`, order)
   }
 
   getOrders(shopID: string, type: OrderType) {
-    // TODO: Temporary
-    return of([])
+    return this.http.get<OrderList>(`/realapi/Shop/${shopID}/Order`).pipe(
+      map(orderlist => type == OrderType.Active? orderlist.active : orderlist.history)
+    )
   }
 
   finishOrder(shopID: string, order: Order) {
-    return of(true)
+    return this.http.put(`/realapi/Shop/${shopID}/Order/${order.id}/Complete`, {})
   }
 
   declineOrder(shopID: string, order: Order) {
-    return of(true)
+    return this.http.delete(`/realapi/Shop/${shopID}/Order/${order.id}/Abort`, {})
   }
 }

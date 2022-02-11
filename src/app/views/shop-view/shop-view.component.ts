@@ -101,6 +101,8 @@ export class ShopViewComponent implements OnInit, OnDestroy {
       if(newItem) {
         this.shopService.addItem(this.shop.id, newItem.item, newItem.image).subscribe({
           next: _ => {
+            if(newItem.item.picture === '') 
+              newItem.item.picture = this.shopService.defaultItemImage
             this.shop.items.push(newItem.item)
             this.search()
             this.notificationService.notify('Item successfully added!', 'success')

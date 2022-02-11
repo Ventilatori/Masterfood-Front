@@ -18,7 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap(user => {
-        if(user && user.token && request.url.startsWith("/api")) {
+        // TODO: Change to api
+        if(user && user.token && request.url.startsWith("/realapi")) {
           request = request.clone({
             headers: request.headers.append("Authorization", user.token), 
             withCredentials: true
