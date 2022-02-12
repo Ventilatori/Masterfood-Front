@@ -68,14 +68,16 @@ export class ShopViewComponent implements OnInit, OnDestroy {
     this.dialog.open(ShopEditDialog, {
       data: this.shop
     }).afterClosed().subscribe(newShop => {
-      this.shopService.updateShop(newShop.shop, newShop.image).subscribe({
-        next: _ => {
-          this.shop = newShop.shop
-          this.notificationService.notify('Shop edited successfully!', 'success')
-        },
-        error: err =>
-          this.notificationService.notify('Error editing shop: ' + err, 'danger')
-      })
+      if(newShop) {
+        this.shopService.updateShop(newShop.shop, newShop.image).subscribe({
+          next: _ => {
+            this.shop = newShop.shop
+            this.notificationService.notify('Shop edited successfully!', 'success')
+          },
+          error: err =>
+            this.notificationService.notify('Error editing shop: ' + err, 'danger')
+        })
+      }
     })
   }
 

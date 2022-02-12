@@ -19,6 +19,7 @@ export interface Shop {
   description: string
   picture: string
   tags: string[]
+  position?: Pos
   items: Item[]
 }
 
@@ -43,13 +44,21 @@ export interface ShopStatistics {
   responseTime: number
 }
 
+export interface Pos {
+  longitude: number
+  latitude: number
+}
+
 export enum OrderType {
   Active,
   Done,
 }
 
 function translateError(err: any): Observable<any> {
-  throw err.error.message
+  if(err.error && err.error.message)
+    throw err.error.message
+  else
+    throw err.statusText
 }
 
 function transformItem(item: Item) {
@@ -94,6 +103,13 @@ export class ShopService {
     )
   }
 
+  getNearShops(pos: Pos): Observable<Shop[]> {
+    return this.http.post<Shop[]>('/realapi/Shop/Near', pos).pipe(
+      map(shops => shops? shops.map(transformShop).slice(0, 6) : []),
+      catchError(translateError)
+    )
+  }
+
   getShop(id: string): Observable<Shop> {
     return this.http.get<Shop>('/realapi/Shop/'+id).pipe(
       map(transformShop),
@@ -126,6 +142,10 @@ export class ShopService {
     formData.append("tags", shop.tags.join(','))
     if(picture)
       formData.append("picture", picture)
+    if(shop.position) {
+      formData.append("longitude", `${shop.position.longitude}`)
+      formData.append("latitude", `${shop.position.latitude}`)
+    }
 
     return this.http.post<{shopID: string}>('/realapi/Shop', formData)
                     .pipe(catchError(translateError))

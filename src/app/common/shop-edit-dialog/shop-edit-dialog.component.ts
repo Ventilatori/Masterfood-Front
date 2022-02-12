@@ -15,7 +15,11 @@ export class ShopEditDialog implements OnInit {
     description: '',
     picture: '',
     items: [],
-    tags: []
+    tags: [],
+    position: {
+      longitude: 0,
+      latitude: 0
+    }
   }
   account = {
     name: '',
@@ -27,6 +31,9 @@ export class ShopEditDialog implements OnInit {
 
   nameFormControl = new FormControl('', [Validators.required]);
   descFormControl = new FormControl('', [Validators.required]);
+
+  lonFormControl = new FormControl('', [Validators.required]);
+  latFormControl = new FormControl('', [Validators.required]);
 
   usernameFormControl = new FormControl('', [Validators.required]);
   passFormControl = new FormControl('', [Validators.required]);
@@ -50,7 +57,9 @@ export class ShopEditDialog implements OnInit {
     return (this.nameFormControl.valid &&
             this.descFormControl.valid) &&
            (!this.isNewShop || (this.usernameFormControl.valid &&
-                                this.passFormControl.valid))
+                                this.passFormControl.valid &&
+                                this.lonFormControl.valid &&
+                                this.latFormControl.valid))
   }
 
   onFileUpload(eventTarget: EventTarget | null) {

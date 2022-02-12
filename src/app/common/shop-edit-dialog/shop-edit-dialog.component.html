@@ -19,6 +19,23 @@
         </mat-error>
       </mat-form-field>
       <app-tag-edit [tags]="shop.tags"></app-tag-edit>
+      <div fxLayout="row" *ngIf="isNewShop && shop.position" fxLayoutAlign="start center">
+        <mat-form-field class="position-input">
+          <mat-label>Latitude</mat-label>
+          <input matInput [(ngModel)]="shop.position.latitude" [formControl]="latFormControl">
+          <mat-error *ngIf="latFormControl.hasError('required')">
+            Latitude is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="h-spacer"></div>
+        <mat-form-field class="position-input">
+          <mat-label>Longitude</mat-label>
+          <input matInput [(ngModel)]="shop.position.longitude" [formControl]="lonFormControl">
+          <mat-error *ngIf="lonFormControl.hasError('required')">
+            Longitude is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
       <div fxLayout="column" class="shopowner-input" *ngIf="isNewShop">
         <h3>Shop owner account</h3>
         <mat-form-field>

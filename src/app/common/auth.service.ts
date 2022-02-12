@@ -1,6 +1,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, catchError, exhaustMap, map, Observable, of, tap} from 'rxjs';
+import {Pos} from './shop.service';
 
 export interface AuthUser {
   id: string
@@ -16,7 +17,7 @@ export enum AuthLevel {
   Guest
 }
 
-export interface Pos {
+export interface PosRes {
   lon: number,
   lat: number
 };
@@ -27,7 +28,10 @@ interface Message {
 };
 
 function translateError(err: any): Observable<any> {
-  throw err.error.message
+  if(err.error && err.error.message)
+    throw err.error.message
+  else
+    throw err.statusText
 }
 
 @Injectable({ providedIn: 'root' })
@@ -76,7 +80,12 @@ export class AuthService {
     this.user.next(null)
   }
 
-  getLocation() {
-    this.http.get<Pos>('/ipapi/json')
+  getLocation(): Observable<Pos> {
+    return this.http.get<PosRes>('/ipapi/json').pipe(map(res => {
+      return {
+        longitude: res.lon,
+        latitude: res.lat
+      }
+    }))
   }
 }

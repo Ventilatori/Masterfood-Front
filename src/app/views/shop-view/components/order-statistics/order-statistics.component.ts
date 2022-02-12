@@ -10,7 +10,7 @@ import {ShopService, ShopStatistics} from 'src/app/common/shop.service';
 export class OrderStatisticsComponent implements OnInit {
   @Input() shopID = ''
 
-  data: any
+  data: any = []
   responseTime = ''
 
   hours = [...Array(24).keys()].map(i => `${i}h`)
@@ -26,7 +26,7 @@ export class OrderStatisticsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fillData([])
+    //this.fillData([])
     if(this.shopID != '') {
       this.shopService.getShopStatistics(this.shopID).subscribe(res => {
         this.calcResponseTime(res.responseTime)
