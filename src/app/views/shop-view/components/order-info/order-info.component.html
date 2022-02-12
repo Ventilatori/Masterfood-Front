@@ -37,10 +37,10 @@
                 </ul>
             </div>
             <div class="spacer"></div>
-            <button mat-icon-button color="warn" (click)="declineOrder(order)">
+            <button mat-icon-button color="warn" (click)="declineOrder(order)" *ngIf="showOrders == OrderType.Active">
                 <mat-icon>clear</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="finishOrder(order)">
+            <button mat-icon-button color="primary" (click)="finishOrder(order)" *ngIf="showOrders == OrderType.Active">
                 <mat-icon>done</mat-icon>
             </button>
         </div>

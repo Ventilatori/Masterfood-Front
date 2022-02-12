@@ -6,7 +6,7 @@
     <mat-tab-group mat-align-tabs="center" dynamicHeight style="tab">
       <mat-tab label="Shops near you" class="tab" *ngIf="nearShops && nearShops.length != 0">
         <div class="content" ngClass.gt-sm="content-gt-sm">
-          <h1>Our reccomendation</h1>
+          <h1>Shops near you</h1>
           <app-shop-list [shops]="nearShops"
                          (tagClicked)="onTagClicked($event)">
           </app-shop-list>

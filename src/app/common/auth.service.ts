@@ -75,7 +75,6 @@ export class AuthService {
   }
 
   logout() {
-    this.http.put('/realapi/Auth/LogOut', {}).subscribe(_ => {})
     localStorage.removeItem("auth")
     this.user.next(null)
   }
