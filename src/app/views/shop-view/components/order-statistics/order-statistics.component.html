@@ -1,0 +1,21 @@
+<div class="order-info mat-elevation-z4" fxLayout="column" fxLayoutAlign="center center">
+    <h2>Shop Orders Per Hour</h2>
+    <ngx-charts-bar-vertical
+        [view]="[375, 200]"
+        [results]="data"
+        [xAxis]="true" [yAxis]="true"
+        [showXAxisLabel]="false"
+        [showYAxisLabel]="false"
+        xAxisLabel="Hours"
+        yAxisLabel="Orders"
+        [xAxisTicks]="hours"
+        [yAxisTickFormatting]="yAxisFormat"
+        [yScaleMin]="0"
+        [showGridLines]="false"
+        [roundEdges]="true"
+        [barPadding]="2"
+        [scheme]="scheme"
+        >
+    </ngx-charts-bar-vertical>
+    <h3>Average time for order: {{responseTime}}</h3>
+</div>

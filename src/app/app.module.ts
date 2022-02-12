@@ -21,6 +21,8 @@ import { ShopEditDialog } from './common/shop-edit-dialog/shop-edit-dialog.compo
 import { OrderInfoComponent } from './views/shop-view/components/order-info/order-info.component';
 import { AuthDialog } from './common/auth-dialog/auth-dialog.component';
 import {AuthInterceptor} from './common/auth.interceptor';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { OrderStatisticsComponent } from './views/shop-view/components/order-statistics/order-statistics.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import {AuthInterceptor} from './common/auth.interceptor';
     TagEditComponent,
     ShopEditDialog,
     OrderInfoComponent,
-    AuthDialog
+    AuthDialog,
+    OrderStatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {AuthInterceptor} from './common/auth.interceptor';
     FormsModule,
     ReactiveFormsModule,
     FlexModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxChartsModule,
   ],
   providers: [
     {

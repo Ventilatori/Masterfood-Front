@@ -38,6 +38,11 @@ export interface OrderList {
   history: Order[]
 }
 
+export interface ShopStatistics {
+  ordersByHour: {hour: number, orders: number}[]
+  responseTime: number
+}
+
 export enum OrderType {
   Active,
   Done,
@@ -104,6 +109,12 @@ export class ShopService {
     )
   }
 
+  getShopStatistics(shopID: string): Observable<ShopStatistics> {
+    return this.http.get<ShopStatistics>(`/realapi/Shop/${shopID}/Statistics`).pipe(
+      catchError(translateError)
+    )
+  }
+
   // Shop CRUD
   createShop(account: {name: string, pass: string}, shop: Shop, picture: File | undefined) {
     const formData = new FormData()
@@ -135,7 +146,9 @@ export class ShopService {
       if(user && user.level == AuthLevel.ShopOwner)
         this.authService.logout()
     })
-    return this.http.delete('/realapi/Shop/' + shopID)
+    return this.http.delete('/realapi/Shop/' + shopID).pipe(
+      catchError(translateError)
+    )
   }
 
   // Item CRUD
@@ -148,7 +161,9 @@ export class ShopService {
       formData.append("picture", picture)
     formData.append("price", item.price.toString())
 
-    return this.http.post('/realapi/Shop/' + shopID + '/Item', formData)
+    return this.http.post('/realapi/Shop/' + shopID + '/Item', formData).pipe(
+      catchError(translateError)
+    )
   }
 
   editItem(shopID: string, item: Item, picture: File | undefined) {
@@ -160,30 +175,41 @@ export class ShopService {
       formData.append("picture", picture)
     formData.append("price", item.price.toString())
 
-    return this.http.put(`/realapi/Shop/${shopID}/Item/${item.id}`, formData)
+    return this.http.put(`/realapi/Shop/${shopID}/Item/${item.id}`, formData).pipe(
+      catchError(translateError)
+    )
   }
 
   deleteItem(shopID: string, item: Item) {
-    return this.http.delete(`/realapi/Shop/${shopID}/Item/${item.id}`)
+    return this.http.delete(`/realapi/Shop/${shopID}/Item/${item.id}`).pipe(
+      catchError(translateError)
+    )
   }
 
   // Order
   newOrder(shopID: string, order: Order) {
-    return this.http.post(`/realapi/Shop/${shopID}/order`, order)
+    return this.http.post(`/realapi/Shop/${shopID}/order`, order).pipe(
+      catchError(translateError)
+    )
   }
 
   getOrders(shopID: string, type: OrderType) {
     return this.http.get<OrderList>(`/realapi/Shop/${shopID}/Order`).pipe(
-      map(orderlist => type == OrderType.Active? orderlist.active : orderlist.history)
+      map(orderlist => type == OrderType.Active? orderlist.active : orderlist.history),
+      catchError(translateError)
     )
   }
 
   finishOrder(shopID: string, order: Order) {
-    return this.http.put(`/realapi/Shop/${shopID}/Order/${order.id}/Complete`, {})
+    return this.http.put(`/realapi/Shop/${shopID}/Order/${order.id}/Complete`, {}).pipe(
+      catchError(translateError)
+    )
   }
 
   declineOrder(shopID: string, order: Order) {
-    return this.http.delete(`/realapi/Shop/${shopID}/Order/${order.id}/Abort`, {})
+    return this.http.delete(`/realapi/Shop/${shopID}/Order/${order.id}/Abort`, {}).pipe(
+      catchError(translateError)
+    )
   }
 
   // Misc

@@ -94,9 +94,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   onNewShop() {
     this.dialog.open(ShopEditDialog, {}).afterClosed().subscribe(res => {
       this.shopService.createShop(res.account, res.shop, res.image).subscribe({
-        next: _ => {
-          //TODO: Redirect
+        next: res => {
           this.notificationService.notify('Shop created successfully!', 'success')
+          this.router.navigate(['/shop', res.shopID])
         },
         error: err =>
           this.notificationService.notify('Shop creation failed: ' + err, 'danger')
